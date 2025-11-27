@@ -472,6 +472,7 @@ export enum ValidSources {
   Hubspot = "hubspot",
   Document360 = "document360",
   File = "file",
+  Folder = "folder",
   UserFile = "user_file",
   GoogleSites = "google_sites",
   Loopio = "loopio",

@@ -386,6 +386,13 @@ export const SOURCE_METADATA_MAP: SourceMap = {
     docs: "https://docs.onyx.app/admin/connectors/official/file",
     isPopular: true,
   },
+  folder: {
+    icon: FileIcon2,
+    displayName: "Folder",
+    category: SourceCategory.Other,
+    docs: "https://docs.onyx.app/admin/connectors/official/file",
+    isPopular: true,
+  },
   user_file: {
     // TODO: write docs for projects and link them here
     icon: FileIcon2,

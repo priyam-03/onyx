@@ -110,7 +110,9 @@ def _process_file(
         DocumentSource(source_type_str) if source_type_str else DocumentSource.FILE
     )
 
-    doc_id = f"FILE_CONNECTOR__{file_id}"
+    # Use appropriate prefix based on source type
+    connector_prefix = "FOLDER_CONNECTOR" if source_type == DocumentSource.FOLDER else "FILE_CONNECTOR"
+    doc_id = f"{connector_prefix}__{file_id}"
     title = metadata.get("title") or file_display_name
 
     # 1) If the file itself is an image, handle that scenario quickly

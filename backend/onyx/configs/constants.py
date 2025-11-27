@@ -177,6 +177,7 @@ class DocumentSource(str, Enum):
     SLAB = "slab"
     PRODUCTBOARD = "productboard"
     FILE = "file"
+    FOLDER = "folder"
     NOTION = "notion"
     ZULIP = "zulip"
     LINEAR = "linear"
@@ -227,7 +228,7 @@ class FederatedConnectorSource(str, Enum):
         return None
 
 
-DocumentSourceRequiringTenantContext: list[DocumentSource] = [DocumentSource.FILE]
+DocumentSourceRequiringTenantContext: list[DocumentSource] = [DocumentSource.FILE, DocumentSource.FOLDER]
 
 
 class NotificationType(str, Enum):

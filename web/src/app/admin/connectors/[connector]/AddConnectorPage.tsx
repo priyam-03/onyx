@@ -13,6 +13,7 @@ import { SourceIcon } from "@/components/SourceIcon";
 import { useEffect, useRef, useState } from "react";
 import { deleteCredential, linkCredential } from "@/lib/credential";
 import { submitFiles } from "./pages/utils/files";
+import { submitFolder } from "./pages/utils/folder";
 import { submitGoogleSite } from "./pages/utils/google_site";
 import AdvancedFormPage from "./pages/Advanced";
 import DynamicConnectionForm from "./pages/DynamicConnectorCreationForm";
@@ -385,6 +386,37 @@ export default function AddConnector({
             setPopup({ message: "Error uploading files", type: "error" });
           } finally {
             setUploading(false);
+          }
+
+          return;
+        }
+
+        // Folder-specific handling
+        if (connector == "folder") {
+          setCreatingConnector(true);
+          try {
+            const folderPath = values.folder_path;
+            if (!folderPath) {
+              setPopup({
+                message: "Folder path is required",
+                type: "error",
+              });
+              return;
+            }
+            const response = await submitFolder(
+              folderPath,
+              setPopup,
+              name,
+              access_type,
+              groups
+            );
+            if (response) {
+              onSuccess();
+            }
+          } catch (error) {
+            setPopup({ message: "Error creating folder connector", type: "error" });
+          } finally {
+            setCreatingConnector(false);
           }
 
           return;

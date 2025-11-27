@@ -696,7 +696,6 @@ def stream_chat_message_objects(
             ),
             structured_response_format=new_msg_req.structured_response_format,
         )
-        has_project_files = project_file_ids is not None and len(project_file_ids) > 0
 
         tool_dict = construct_tools(
             persona=persona,
@@ -706,17 +705,9 @@ def stream_chat_message_objects(
             llm=llm,
             fast_llm=fast_llm,
             run_search_setting=(
-                OptionalSearchSetting.NEVER
-                if (
-                    chat_session.project_id
-                    and not has_project_files
-                    and persona.is_default_persona
-                )
-                else (
-                    retrieval_options.run_search
-                    if retrieval_options
-                    else OptionalSearchSetting.AUTO
-                )
+                retrieval_options.run_search
+                if retrieval_options
+                else OptionalSearchSetting.AUTO
             ),
             search_tool_config=SearchToolConfig(
                 answer_style_config=answer_style_config,

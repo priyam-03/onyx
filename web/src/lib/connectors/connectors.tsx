@@ -5,7 +5,7 @@ import { Credential } from "@/lib/connectors/credentials"; // Import Credential 
 
 export function isLoadState(connector_name: string): boolean {
   // TODO: centralize connector metadata like this somewhere instead of hardcoding it here
-  const loadStateConnectors = ["web", "xenforo", "file", "airtable"];
+  const loadStateConnectors = ["web", "xenforo", "file", "folder", "airtable"];
   if (loadStateConnectors.includes(connector_name)) {
     return true;
   }
@@ -943,6 +943,20 @@ For example, specifying .*-support.* as a "channel" will cause the connector to 
     ],
     advanced_values: [],
   },
+  folder: {
+    description: "Configure Folder connector",
+    values: [
+      {
+        type: "text",
+        query: "Enter the folder path:",
+        label: "Folder Path",
+        name: "folder_path",
+        optional: false,
+        description: "Path to the folder containing files to index",
+      },
+    ],
+    advanced_values: [],
+  },
   zulip: {
     description: "Configure Zulip connector",
     values: [
@@ -1786,6 +1800,10 @@ export interface FileConfig {
   file_locations: string[];
   file_names: string[];
   zip_metadata: Record<string, any>;
+}
+
+export interface FolderConfig {
+  folder_path: string;
 }
 
 export interface ZulipConfig {
