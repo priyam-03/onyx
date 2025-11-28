@@ -85,7 +85,8 @@ services:
     # Optional, only for debugging purposes
     volumes:
       - api_server_logs:/var/log/onyx
-      - /home/cdot/Downloads/onyx_files:/app/local_files:rw
+      # EC2: Update this path to a directory on your EC2 instance, or remove if not needed
+      # - /path/to/onyx_files:/app/local_files:rw
 
   background:
     image: ${ONYX_BACKEND_IMAGE:-onyxdotapp/onyx-backend:${IMAGE_TAG:-latest}}
@@ -126,7 +127,8 @@ services:
     # Optional, only for debugging purposes
     volumes:
       - background_logs:/var/log/onyx
-      - /home/cdot/Downloads/onyx_files:/app/local_files:rw
+      # EC2: Update this path to a directory on your EC2 instance, or remove if not needed
+      # - /path/to/onyx_files:/app/local_files:rw
     logging:
       driver: json-file
       options:
@@ -304,7 +306,10 @@ services:
       - path: .env
         required: false
     environment:
-      - DOMAIN=localhost
+      # EC2: Change this to your EC2 instance's public IP or domain name
+      # Example: - DOMAIN=ec2-xx-xx-xx-xx.compute-1.amazonaws.com
+      # Or: - DOMAIN=your-domain.com
+      - DOMAIN=${DOMAIN:-localhost}
       # Nginx proxy timeout settings (in seconds)
       - NGINX_PROXY_CONNECT_TIMEOUT=${NGINX_PROXY_CONNECT_TIMEOUT:-300}
       - NGINX_PROXY_SEND_TIMEOUT=${NGINX_PROXY_SEND_TIMEOUT:-300}
