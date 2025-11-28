@@ -179,13 +179,13 @@ services:
       dockerfile: Dockerfile.model_server
     # GPU Support: Uncomment the following lines to enable GPU support
     # Requires nvidia-container-toolkit to be installed on the host
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: all
-    #           capabilities: [gpu]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     command: >
       /bin/sh -c "if [ \"${DISABLE_MODEL_SERVER:-false}\" = \"True\" ]; then
         echo 'Skipping service...';
@@ -216,7 +216,7 @@ services:
     # GPU Support: Uncomment the following lines to enable GPU support
     # Requires nvidia-container-toolkit to be installed on the host
     deploy:
-      resources:
+      resources:  
         reservations:
           devices:
             - driver: nvidia

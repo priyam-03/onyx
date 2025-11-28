@@ -190,9 +190,19 @@ class CloudEmbedding:
         import openai
 
         # Use the OpenAI specific timeout for this one
-        client = openai.AsyncOpenAI(
-            api_key=self.api_key, timeout=OPENAI_EMBEDDING_TIMEOUT
-        )
+        # If api_url is provided, use it as base_url for OpenAI-compatible servers (e.g., vLLM)
+        client_kwargs = {
+            "api_key": self.api_key,
+            "timeout": OPENAI_EMBEDDING_TIMEOUT,
+        }
+        if self.api_url:
+            # Ensure the base_url ends with /v1 if it doesn't already
+            base_url = self.api_url.rstrip("/")
+            if not base_url.endswith("/v1"):
+                base_url = f"{base_url}/v1"
+            client_kwargs["base_url"] = base_url
+
+        client = openai.AsyncOpenAI(**client_kwargs)
 
         final_embeddings: list[Embedding] = []
 
